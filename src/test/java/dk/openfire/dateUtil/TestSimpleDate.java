@@ -3,8 +3,41 @@ package dk.openfire.dateUtil;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 public class TestSimpleDate {
+
+    @Test
+    public void testConstructor_ValidDate() {
+        // Given
+        final int year = 2000;
+        final int month = 1;
+        final int day = 1;
+
+        // when
+        SimpleDate simpleDate = new SimpleDate(year, month, day);
+
+        // then
+        // No methods on it so far, so cannot validate anything but constructor
+        assertThat(simpleDate).isNotNull();
+    }
+
+    @Test
+    public void testConstructor_invalidDate() {
+        // Given
+        final int year = 2000;
+        final int month = 16;
+        final int day = 1;
+
+        // when
+        try {
+            SimpleDate simpleDate = new SimpleDate(year, month, day);
+            fail("expected exception to be thrown");
+        } catch(IllegalArgumentException e) {
+
+        }
+    }
+
 
     @Test
     public void testIsLeapYear() {
