@@ -2,8 +2,9 @@ package dk.openfire.dateUtil;
 
 public class SimpleDate {
 
-    private static int EPOC = 1970;
-
+    private static int EPOC = 2000;
+    public final int daysSinceEpoc;
+    private static int DAYS_IN_YEAR = 365;
 
     /**
      *
@@ -15,6 +16,28 @@ public class SimpleDate {
         if(!validateDate(year, month, day)) {
             throw new IllegalArgumentException("Invalid date");
         }
+        this.daysSinceEpoc = calculateDay(year, month, day);
+    }
+
+    private int calculateDay(int year, int month, int day) {
+        // This is a naive code and there is most likely room for improvement
+        int days = 0;
+        for (int y = EPOC; y<year; y++) {
+            days+=DAYS_IN_YEAR;
+            if(isLeapYear(y)) {
+                days++;
+            }
+        }
+        for(int m = 1; m<month; m++){
+            days += Month.valueOf(m).getDays();
+            if(m == 2 && isLeapYear(year)) {
+                days++;
+            }
+        }
+
+        days += day - 1;
+
+        return days;
     }
 
     public static boolean validateDate(final int year, final int month, final int day) {
@@ -45,11 +68,16 @@ public class SimpleDate {
             }
         }
 
+        if(year < EPOC) {
+            // This is done to make the code faster in the naive way it is created
+            return false;
+        }
+
         return true;
     }
 
     public int findDifference(SimpleDate other) {
-        return 0;
+        return Math.abs(this.daysSinceEpoc - other.daysSinceEpoc);
     }
 
     public static boolean isLeapYear(int year) {
