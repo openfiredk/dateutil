@@ -11,7 +11,7 @@ import static org.junit.Assert.fail;
 public class TestSimpleDate {
 
     @Test
-    public void testConstructor_ValidDate() {
+    public void testConstructor_ValidDate_zero_days() {
         // Given
         final int year = 2000;
         final int month = 1;
@@ -21,9 +21,69 @@ public class TestSimpleDate {
         SimpleDate simpleDate = new SimpleDate(year, month, day);
 
         // then
-        // No methods on it so far, so cannot validate anything but constructor
-        assertThat(simpleDate).isNotNull();
+        assertThat(simpleDate.daysSinceEpoc).isEqualTo(0);
     }
+
+    @Test
+    public void testConstructor_ValidDate_10_days() {
+        // Given
+        LocalDate ld = LocalDate.of(2000, 1, 1).plusDays(10);
+
+        // when
+        SimpleDate simpleDate = new SimpleDate(ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
+
+        // then
+        assertThat(simpleDate.daysSinceEpoc).isEqualTo(10);
+    }
+
+    @Test
+    public void testConstructor_ValidDate_50_days() {
+        // Given
+        LocalDate ld = LocalDate.of(2000, 1, 1).plusDays(50);
+
+        // when
+        SimpleDate simpleDate = new SimpleDate(ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
+
+        // then
+        assertThat(simpleDate.daysSinceEpoc).isEqualTo(50);
+    }
+
+    @Test
+    public void testConstructor_ValidDate_100_days() {
+        // Given
+        LocalDate ld = LocalDate.of(2000, 1, 1).plusDays(100);
+
+        // when
+        SimpleDate simpleDate = new SimpleDate(ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
+
+        // then
+        assertThat(simpleDate.daysSinceEpoc).isEqualTo(100);
+    }
+
+    @Test
+    public void testConstructor_ValidDate_500_days() {
+        // Given
+        LocalDate ld = LocalDate.of(2000, 1, 1).plusDays(500);
+
+        // when
+        SimpleDate simpleDate = new SimpleDate(ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
+
+        // then
+        assertThat(simpleDate.daysSinceEpoc).isEqualTo(500);
+    }
+
+    @Test
+    public void testConstructor_ValidDate_5000_days() {
+        // Given
+        LocalDate ld = LocalDate.of(2000, 1, 1).plusDays(5000);
+
+        // when
+        SimpleDate simpleDate = new SimpleDate(ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
+
+        // then
+        assertThat(simpleDate.daysSinceEpoc).isEqualTo(5000);
+    }
+
 
     @Test
     public void testConstructor_invalidDate() {
