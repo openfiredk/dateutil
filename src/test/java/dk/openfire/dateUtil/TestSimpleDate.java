@@ -144,4 +144,27 @@ public class TestSimpleDate {
         assertThat(difference).isEqualTo(1000);
         assertThat(reverseDifference).isEqualTo(1000);
     }
+
+    @Test
+    public void testFindDifference_10000days() {
+
+        // Given
+
+        // Using java data as control
+        final LocalDate today =  LocalDate.now();
+        final LocalDate thousandDaysFromNow = today.plusDays(10000);
+
+        final SimpleDate sdToday = new SimpleDate(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+        final SimpleDate sdThousandDaysFromNow = new SimpleDate(thousandDaysFromNow.getYear(), thousandDaysFromNow.getMonthValue(), thousandDaysFromNow.getDayOfMonth());
+
+        // When
+        int difference = sdToday.findDifference(sdThousandDaysFromNow);
+        int reverseDifference = sdThousandDaysFromNow.findDifference(sdToday);
+
+        // Then
+        assertThat(difference).isEqualTo(10000);
+        assertThat(reverseDifference).isEqualTo(10000);
+    }
+
+
 }
