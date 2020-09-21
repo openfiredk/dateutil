@@ -2,6 +2,9 @@ package dk.openfire.dateUtil;
 
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
@@ -59,5 +62,26 @@ public class TestSimpleDate {
         assertThat(SimpleDate.isLeapYear(2023)).isFalse();
         assertThat(SimpleDate.isLeapYear(2024)).isTrue();
 
+    }
+
+    @Test
+    public void testFindDifference_1000days() {
+
+        // Given
+
+        // Using java data as control
+        final LocalDate today =  LocalDate.now();
+        final LocalDate thousandDaysFromNow = today.plusDays(1000);
+
+        final SimpleDate sdToday = new SimpleDate(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+        final SimpleDate sdThousandDaysFromNow = new SimpleDate(thousandDaysFromNow.getYear(), thousandDaysFromNow.getMonthValue(), thousandDaysFromNow.getDayOfMonth());
+
+        // When
+        int difference = sdToday.findDifference(sdThousandDaysFromNow);
+        int reverseDifference = sdThousandDaysFromNow.findDifference(sdToday);
+
+        // Then
+        assertThat(difference).isEqualTo(1000);
+        assertThat(reverseDifference).isEqualTo(1000);
     }
 }

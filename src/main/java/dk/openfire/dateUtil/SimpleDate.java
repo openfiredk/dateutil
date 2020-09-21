@@ -48,6 +48,10 @@ public class SimpleDate {
         return true;
     }
 
+    public int findDifference(SimpleDate other) {
+        return 0;
+    }
+
     public static boolean isLeapYear(int year) {
         /*
          * From https://en.wikipedia.org/wiki/Leap_year#Algorithm:
